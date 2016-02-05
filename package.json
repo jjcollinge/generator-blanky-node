@@ -1,5 +1,5 @@
 {
-  "name": "generator-blanky-node",
+  "name": "generator-blanky-gen",
   "version": "1.0.0",
   "description": "A template for creating a node microservice",
   "main": "index.js",

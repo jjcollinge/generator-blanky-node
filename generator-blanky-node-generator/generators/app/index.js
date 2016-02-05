@@ -4,37 +4,49 @@ var chalk = require('chalk');
 var yosay = require('yosay');
 
 module.exports = yeoman.generators.Base.extend({
-  prompting: function () {
-    var done = this.async();
+    prompting: function () {
+        var done = this.async();
 
-    // Have Yeoman greet the user.
-    this.log(yosay(
-      'Welcome to the finest ' + chalk.red('generator-blanky-node') + ' generator!'
-    ));
+        // Have Yeoman greet the user.
+        this.log(yosay(
+            'Ahoy there! welcome to ' + chalk.red('blanky') + ' generator!'
+            ));
 
-    var prompts = [{
-      type: 'confirm',
-      name: 'someOption',
-      message: 'Would you like to enable this option?',
-      default: true
-    }];
+        var prompts = [
+            {
+                type: 'input',
+                name: 'platformType',
+                message: 'What type of application would you like to generator?',
+                default: "node"
+            },
+            {
+                type: 'input',
+                name: 'pkgName',
+                message: 'What is your app name?',
+                default: "blanky-service"
+            },
+            {
+                type: 'input',
+                name: 'pkgVer',
+                message: 'What is your app version?',
+                default: "1.0.0"
+            }];
 
-    this.prompt(prompts, function (props) {
-      this.props = props;
-      // To access props later use this.props.someOption;
+        this.prompt(prompts, function (props) {
+            this.props = props;
+            done();
+        }.bind(this));
+    },
 
-      done();
-    }.bind(this));
-  },
+    copying: function () {
+        var pkgName = this.props.pkgName;
+        var pkgVer = this.props.pkgVer;
 
-  writing: function () {
-    this.fs.copy(
-      this.templatePath('dummyfile.txt'),
-      this.destinationPath('dummyfile.txt')
-    );
-  },
+        console.log("application name: " + pkgName);
+        console.log("application version: " + pkgVer);
+    },
 
-  install: function () {
-    this.installDependencies();
-  }
+    install: function () {
+        this.installDependencies();
+    }
 });
